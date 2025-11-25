@@ -35,4 +35,15 @@ return [
         ],
     ],
 
+    'mock_api' => [
+        'headers' => [
+            'name' => 'x-mock-response-name',
+            'value' => [
+                'sucesso_pix' => 'SUCESSO_PIX',
+                'erro_pix' => 'ERRO_PIX',
+                'sucesso_wd' => 'SUCESSO_WD',
+                'erro_wd' => 'ERRO_WD',
+            ]
+        ]
+    ]
 ];
