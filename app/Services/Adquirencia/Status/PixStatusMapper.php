@@ -13,7 +13,6 @@ class PixStatusMapper
         return match ($normalized) {
             'PENDING', 'PROCESSING' => 'PENDING',
             'CONFIRMED', 'PAID' => 'CONFIRMED',
-            // Sem coluna CANCELLED no schema; tratamos como FAILED
             'CANCELLED', 'FAILED' => 'FAILED',
             default => 'PENDING',
         };

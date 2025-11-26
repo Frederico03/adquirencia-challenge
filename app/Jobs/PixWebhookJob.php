@@ -47,7 +47,6 @@ class PixWebhookJob implements ShouldQueue
             return;
         }
 
-        // Atualiza se já existir
         $transaction->status = PixStatusMapper::mapExternal($this->dto->status);
         if ($this->dto->amount > 0) {
             $transaction->amount = $this->dto->amount;

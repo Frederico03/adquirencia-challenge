@@ -12,9 +12,7 @@ class WithdrawStatusMapper
         $normalized = strtoupper(trim($status));
         return match ($normalized) {
             'PENDING', 'PROCESSING', 'REQUESTED' => 'PENDING',
-            // Sucesso em variações
             'SUCCESS', 'DONE', 'COMPLETED' => 'COMPLETED',
-            // Falhas e cancelamentos
             'CANCELLED', 'FAILED', 'ERROR' => 'FAILED',
             default => 'PENDING',
         };
