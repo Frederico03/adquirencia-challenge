@@ -45,5 +45,14 @@ return [
                 'erro_wd' => 'ERRO_WD',
             ]
         ]
-    ]
+    ],
+    'subadquirentes' => [
+        'subadq_a' => [
+            'base_url' => env('SUBADQ_A_BASE_URL', 'https://api.subadq_a.com'),
+        ],
+        'subadq_b' => [
+            'base_url' => env('SUBADQ_B_BASE_URL', 'https://api.subadq_b.com'),
+        ],
+    ],
+
 ];

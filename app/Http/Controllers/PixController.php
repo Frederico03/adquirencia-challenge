@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class PixController extends Controller
 {
         public function __construct(
-        private PixServiceInterface $service
+        private PixServiceInterface $service,
     )
     {}
     public function create(

@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::updateOrCreate(
+        $user1 = User::updateOrCreate(
             ['email' => 'test@example.com'],
             [
                 'name' => 'Test User',
@@ -23,10 +23,19 @@ class UserSeeder extends Seeder
             ],
         );
 
+        $user2 = User::updateOrCreate(
+            ['email' => 'test2@example.com'],
+            [
+                'name' => 'Test User 2',
+                'password' => Hash::make('password'),
+            ],
+        );
+
         $subadquirentes = Subadquirente::pluck('id');
 
         if ($subadquirentes->isNotEmpty()) {
-            $user->subadquirentes()->syncWithoutDetaching($subadquirentes->all());
+            $user1->subadquirentes()->syncWithoutDetaching($subadquirentes->toArray()[0]);
+            $user2->subadquirentes()->syncWithoutDetaching($subadquirentes->toArray()[1]);
         }
     }
 }

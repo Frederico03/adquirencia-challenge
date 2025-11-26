@@ -10,6 +10,8 @@ use App\Services\Adquirencia\SubadqB\Withdraw\DTO\Response\SubadqBWithdrawCreate
 use App\Services\Adquirencia\SubadqB\Withdraw\DTO\Response\SubadqBWithdrawErrorResponseDto;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
+use App\Jobs\WithdrawWebhookJob;
+use App\Services\Adquirencia\Contracts\WithdrawWebhookDto;
 
 class SubadqBWithdrawService implements WithdrawServiceInterface
 {
@@ -65,6 +67,16 @@ class SubadqBWithdrawService implements WithdrawServiceInterface
             withdraw_id: $data['withdraw_id'],
             status: $data['status'],
         );
+
+        // Simula webhook inicial com status PENDING
+        $webhookDto = new WithdrawWebhookDto(
+            externalWithdrawId: $data['withdraw_id'],
+            status: 'PENDING',
+            amount: $payload['amount'],
+            processedAt: null,
+            source: 'SubadqB'
+        );
+        WithdrawWebhookJob::dispatch($webhookDto);
 
         return $dtoResponse;
     }

@@ -2,12 +2,12 @@
 
 namespace App\Services\Adquirencia\SubadqB;
 
-use Api\App\Services\Adquirencia\SubadqB\Pix\SubadqBPixService as PixSubadqBPixService;
-use Api\App\Services\Adquirencia\SubadqB\Withdraw\SubadqBWithdrawService;
 use App\Models\Subadquirente;
 use App\Services\Adquirencia\Contracts\AdquirenciaFactoryInterface;
-use App\Services\Adquirencia\Contracts\PixServiceInterface;
-use App\Services\Adquirencia\Contracts\WithdrawServiceInterface;
+use App\Services\Adquirencia\Contracts\Services\PixServiceInterface;
+use App\Services\Adquirencia\Contracts\Services\WithdrawServiceInterface;
+use App\Services\Adquirencia\SubadqB\Pix\SubadqBPixService;
+use App\Services\Adquirencia\SubadqB\Withdraw\SubadqBWithdrawService;
 use Illuminate\Contracts\Container\Container;
 
 class SubadqBFactory implements AdquirenciaFactoryInterface
@@ -19,7 +19,7 @@ class SubadqBFactory implements AdquirenciaFactoryInterface
 
     public function bind(Subadquirente $subadquirente): void
     {
-        $pixService = $this->container->make(PixSubadqBPixService::class, [
+        $pixService = $this->container->make(SubadqBPixService::class, [
             'subadquirente' => $subadquirente,
         ]);
 

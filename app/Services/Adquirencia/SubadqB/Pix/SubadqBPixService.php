@@ -9,6 +9,8 @@ use App\Services\Adquirencia\SubadqB\Pix\DTO\Request\SubadqBPayerDto;
 use App\Services\Adquirencia\SubadqB\Pix\DTO\Request\SubadqBPixCreateRequestDto;
 use App\Services\Adquirencia\SubadqB\Pix\DTO\Response\SubadqBPixCreateResponseDto;
 use App\Services\Adquirencia\SubadqB\Pix\DTO\Response\SubadqBPixErrorResponseDto;
+use App\Jobs\PixWebhookJob;
+use App\Services\Adquirencia\Contracts\PixWebhookDto;
 
 class SubadqBPixService implements PixServiceInterface
 {
@@ -72,6 +74,19 @@ class SubadqBPixService implements PixServiceInterface
             expires_at: $data['expires_at'],
             status: $data['status'],
         );
+
+        // Simula webhook inicial com status PENDING
+        $webhookDto = new PixWebhookDto(
+            externalTransactionId: $data['transaction_id'],
+            externalPixId: $data['transaction_id'],
+            status: 'PENDING',
+            amount: $payload['amount'],
+            payerName: $payload['payer']['name'] ?? null,
+            payerDocument: $payload['payer']['cpf_cnpj'] ?? null,
+            confirmedAt: null,
+            source: 'SubadqB'
+        );
+        PixWebhookJob::dispatch($webhookDto);
 
         return $dtoResponse;
     }

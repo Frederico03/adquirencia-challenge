@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class WithdrawController extends Controller
 {
     public function __construct(
-        private WithdrawServiceInterface $service
+        private WithdrawServiceInterface $service,
     )
     {}
 
