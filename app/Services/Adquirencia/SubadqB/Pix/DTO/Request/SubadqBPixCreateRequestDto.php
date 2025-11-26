@@ -5,20 +5,13 @@ use App\Services\Adquirencia\SubadqB\Pix\DTO\Request\SubadqBPayerDto;
 
 class SubadqBPixCreateRequestDto
 {
-    public string $seller_id;
-    public int $amount;
-    public string $order;
-    public SubadqBPayerDto $payer;
-    public int $expires_in;
-
-    public function __construct(string $seller_id, int $amount, string $order, SubadqBPayerDto $payer, int $expires_in)
-    {
-        $this->seller_id = $seller_id;
-        $this->amount = $amount;
-        $this->order = $order;
-        $this->payer = $payer;
-        $this->expires_in = $expires_in;
-    }
+    public function __construct(
+        public string $seller_id,
+        public int $amount,
+        public string $order,
+        public SubadqBPayerDto $payer,
+        public int $expires_in
+    ) {}
 
     public function toArray(): array
     {
@@ -36,4 +29,3 @@ class SubadqBPixCreateRequestDto
         return json_encode($this->toArray(), JSON_UNESCAPED_UNICODE);
     }
 }
-
