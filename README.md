@@ -2,6 +2,11 @@
 
 Este projeto é uma API em Laravel para criação de transações Pix, solicitação de saques (withdraw) e processamento de webhooks de confirmação, utilizando filas para processamento assíncrono e PostgreSQL como banco de dados (com Docker). Inclui autenticação via Sanctum, validações, e um fluxo de webhook resiliente.
 
+## Comentários 100% orgânicos e não influenciados por IA
+ Optei por utilziar algumas tabelas que referenciam o domínio do projeto, como pix transactions e withdraws, por um gosto pessoal e por se encaixar no contexto optei também por utilizar tabelas pivo, que se adequam muito bem ao Laravel e trazem mais agilidade e elegância ao código. 
+ Optei por utilizar o bind no container do Laravel para tornar a inversão de dependências dinâmica, ponto insubstituível e que vai de encontro com os padrões de código estabelecidos por uncle Bob nos anos 2000. Com isso consigo de forma dinâmica analisar quais são as adquirencias vinculadas a um usuário e isso respeitando os padrões do projeto e mantendo vínculos externo dentro de um Service, sendo plenamente possível a expansão de mais adquirencias, também dei a opção de ser possível passar a adquirencia pela requisição, mas como não está sendo solicitado apenas construí requisições sem essa parte, assim é buscado os primeiros registros de vínculo user-adquirencia. Defino DTO's para aumentar a robustez e tornar previsivel os dados a serem recebidos, facilitando futuras manutenções do código.
+ Fiz algo semelhante com a questão do WebHook, em que verifico de forma dinâmica para onde esse WebHook irá ser tratado, adotando um resolver para isso e dispachando o job que irá executar a lógica de update de status. :)
+
 ## Sumário
 - Visão geral da arquitetura
 - Pré-requisitos
@@ -44,6 +49,15 @@ Fluxo resumido:
 - PHP 8.2+
 - Composer 2+
 
+---
+
+## Instalação de Dependências
+
+Dentro da pasta `api`:
+
+```cmd
+composer install
+```
 ---
 
 ## Configuração do Ambiente
@@ -89,16 +103,6 @@ Ajuste o `.env` conforme o ambiente escolhido:
   - `DB_DATABASE=adquirencia`
   - `DB_USERNAME=postgres`
   - `DB_PASSWORD=postgres`
-
----
-
-## Instalação de Dependências
-
-Dentro da pasta `api`:
-
-```cmd
-composer install
-```
 
 ---
 
@@ -156,6 +160,9 @@ Arquivo: `routes/api.php`
 
 
 Observação: Use o dump do insomnia.
+
+Obs2: Pegue o token retornado em login e cole no auth tipo Bearer Token, no campo value.
+Obs3: Observe o header passado informando se é para um retorno com erro ou não.
 
 ---
 
